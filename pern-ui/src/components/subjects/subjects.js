@@ -9,6 +9,6 @@ export default function Dashboard() {
   }
   
   return(
-    <h2>students</h2>
+    <h2>subjects</h2>
   );
 }
