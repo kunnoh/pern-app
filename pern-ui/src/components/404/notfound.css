@@ -1,0 +1,12 @@
+.not-found{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.not-found a {
+    color: black;
+    text-decoration: underline;
+}
