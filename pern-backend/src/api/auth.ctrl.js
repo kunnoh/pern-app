@@ -6,7 +6,8 @@ class Authctrl {
         // check email and password
         let password, email
         try {
-            password, email = req.body
+            password = req.body.password 
+            email = req.body.email
         } catch (err) {
             console.error('error decoding credentials: ')
             res.status(400).json({message: 'Unauthorised', error: 'missing credentials'})
@@ -24,8 +25,6 @@ class Authctrl {
             if(loggedUser){
                 res.setHeader('authorization', 'Bearer '+accessToken)
                 res.setHeader('RefreshToken', refreshToken)
-                loggedUser['userInfo'] = [],
-                loggedUser['token'] = accessToken,
                 loggedUser['refreshToken'] = refreshToken
                 
                 res.status(200).json(loggedUser)

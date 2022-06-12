@@ -8,10 +8,10 @@ import AuthService from "../services/auth.service";
 
 export const login = (username, password) => (dispatch) => {
     return AuthService.login(username, password).then(
-        (data) => {
+        (resp) => {
             dispatch({
             type: LOGIN_SUCCESS,
-            payload: { user: data },
+            payload: { user: resp },
             });
             return Promise.resolve();
         },
@@ -25,8 +25,13 @@ export const login = (username, password) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-    AuthService.logout();
-    dispatch({
-      type: LOGOUT,
+     return AuthService.logout().then((r)=>{
+        localStorage.removeItem('user');
+        window.location.reload()
+        dispatch({
+          type: LOGOUT,
+        });
+        return Promise.resolve();
     });
+
 };

@@ -1,26 +1,26 @@
 import axios from "axios";
-import authHeader from "./auth-header";
+import authHeader from "./auth-header.service";
 
-import { api } from "../../environment/environment";
+const api = 'http://localhost:8066';
 
-const getUsers = (pageNo=1, itemsPerPage=20) => {
-    return axios.get(api + "/users", { headers: authHeader() });
+const getUsers = async (pageNo=1, itemsPerPage=20) => {
+    return await axios.get(api + "/users", { headers: authHeader() });
 }
 
 const getUser = (id) => {
     return axios.get(api + "/users/"+id, { headers: authHeader() });
 }
 
-const createUser = (user) => {
-    return axios.post(api + "/users", user, { headers: authHeader() });
+const createUser = async (email, lastname, firstname) => {
+    return await axios.post(api + "/users", {email, firstname, lastname}, { headers: authHeader() });
 }
 
-const updateUser = (user) => {
-    return axios.patch(api + "/users", user), { headers: authHeader() };
+const updateUser = async (lastname, firstname, email) => {
+    return await axios.patch(api + "/users", {firstname, lastname, email}, { headers: authHeader() });
 }
 
-const deleteUser = (user) => {
-    return axios.delete(api + "/users/"+user.id, { headers: authHeader() });
+const deleteUser = async (email) => {
+    return await axios.delete(api + "/users/"+email, { headers: authHeader() });
 }
 
 export default {
@@ -29,5 +29,4 @@ export default {
     getUsers,
     updateUser,
     deleteUser
-
 }

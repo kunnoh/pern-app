@@ -4,8 +4,9 @@ class UsersModel {
     static async createUser (user){
         user['joined'] = Date.now()
         try {
-            const userRes = await pool.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, password])
-            const inserted = userRes.rows
+            const userRes = await pool.query('INSERT INTO users (email, firstname, lastname) VALUES ($1, $2, $3)', [user.email, user.firstname, user.lastname])
+            const inserted = userRes.rows[0]
+            console.log(inserted)
             return { insertedId: inserted.id }
         } catch (err) {
             console.error(err)
@@ -18,13 +19,13 @@ class UsersModel {
 
     static async loginUser(email, password) {
         try {
-            const user =  await pool.query('SELECT * FROM users WHERE email $1', [email])
-            const userData = user.rows
-            if(!user){
+            const user = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+            const userData = user.rows[0]
+            if(!userData){
                 throw { error: 'password or email incorrect' }
             } else {
-                if(user.password === password){
-                    return user
+                if(userData.password === password){
+                    return userData
                 }            
                 throw { error: 'password or email incorrect' }
             }
@@ -51,18 +52,12 @@ class UsersModel {
         if(filters){
             if("active" in filters){
                 query_params = {active: filters.active}
-            } else if("dormant" in filters){
-                query_params = {dormant: filters.dormant}
-            } else if("package" in filters){
-                query_params.query = {package: filters.package}
-            } else if("uid" in filters){
-                query_params.query = {uid: filters.uid}
-            }
+            } 
         }
 
         console.log("QUERY PARAMS:: ", query_params)
         try {
-            const users = await pool.query('SELECT * FROM users')
+            const users = await pool.query('SELECT * FROM users ORDER BY id ASC')
             const usersList = users.rows
             const totalUsers = users.rowCount
             return { usersList, totalUsers }
@@ -70,39 +65,23 @@ class UsersModel {
             console.warn("Failed to get cursor on UsersModel::: ",e)
             return { err: e }
         }
-        // try {
-        //     let displayCursor
-        //     if(usersPerPage === "all"){
-        //         displayCursor = cursor
-        //     } else {
-        //         displayCursor = cursor.limit(Number(usersPerPage)).skip(usersPerPage*page)
-        //     }
-            
-        //     const usersList = await displayCursor.toArray()
-        //     const totalUsers = await usersDB.countDocuments(query)
-        //     return { usersList, totalUsers }
-        // } catch (e) {
-        //     console.error(`Failed toget array from cursor in tasksDAO: ,${e}`)
-        //     return { err: e }
-        // }
 
     }
 
     static async updateUser(userToUpdate){
         try {
-            const user = await pool.query('UPDATE users SET email = $1, password = $2 WHERE id = $3',
-            [userToUpdate.email, userToUpdate.password, userToUpdate.id])
-            const updatedUser = user.rows
-            return { updatedUser }    
+            const user = await pool.query('UPDATE users SET firstname = $1, lastname = $2 WHERE email = $3',
+            [userToUpdate.firstname, userToUpdate.lastname, userToUpdate.email])
+            return { message: 'success' }    
         } catch (err) {
             console.error('Error updating user:: ',err)
             return { error: 'update failed'}
         }
     }
 
-    static async deleteUser(id){
+    static async deleteUser(email){
         try {
-            const response = await pool.query('DELETE FROM users WHERE id = $1', [id])
+            const response = await pool.query('DELETE FROM users WHERE email = $1', [email])
             console.log(response)
             return { message: 'success' }
         } catch (err) {

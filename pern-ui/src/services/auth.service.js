@@ -1,19 +1,19 @@
 import axios from "axios";
-// import { api } from "../../environment/environment";
 
 const api = 'http://localhost:8066';
+
 const login = async (email, password) => {
     try {
-        return await axios.post(api+'/auth/login', { email, password });        
+        const user = await axios.post(api+'/auth/login', { email, password });
+        localStorage.setItem('user', JSON.stringify(user.data));
+        return user.data;
     } catch (err) {
         throw err.response.data;
     }
 }
 
-const logout = (accessToken) => {
-    axios.get(api + "/auth/logout").then((response) =>{
-        localStorage.removeItem("user");
-    })
+const logout = async (accessToken) => {
+    return await axios.get(api + "/auth/logout");
 };
 
 export default {

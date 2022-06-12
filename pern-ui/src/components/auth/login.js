@@ -26,6 +26,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Login(props) {
+    const { user: currentUser } = useSelector((state) => state.auth);
+    if(currentUser) {
+      return <Navigate to="/"/>
+    }
     const form = useRef();
     const classes = useStyles();
     const dispatch = useDispatch();

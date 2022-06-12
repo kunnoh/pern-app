@@ -59,13 +59,7 @@ class Usersctrl {
         // filters
         const queryType = Object.keys(reqQuery)
         let filters = {}
-        queryType.map((q)=>{
-            if(reqQuery[q] !== '' && !q.includes('page')){
-                filters[q] = reqQuery[q]
-            }
-        })
 
-        console.log('get tasks filter: ', filters)
         try {
             const { usersList, totalUsers } = await UsersModel.getUsers({
                 filters,
@@ -89,20 +83,31 @@ class Usersctrl {
     }
 
     static async updateUser(req,res){
-        res.status(200).json({ message: 'success' })
-        return
+        const user = req.body
+
+        if(!user ){
+            res.status(400).json({ error: "empty fields"});
+            return;
+        }
+
+        // update user
+        try {
+            const saveResp = await UsersModel.updateUser(user)
+            res.status(201).json(saveResp)
+            return
+        } catch (err) {
+            console.error(err)
+            res.status(500).json(err)
+            return
+        }
     }
 
-    static async replaceUser(req,res){
-        res.status(200).json({ message: 'success' })
-        return
-    }
     static async deleteUser(req,res){
         const reqParam = req.params
-        if(!reqParam.id ) return res.status(400).json({ error: "Bad request"});
+        if(!reqParam.email ) return res.status(400).json({ error: "Bad request"});
 
         try {
-            let r = await UsersModel.deleteUser(reqParam.id)
+            let r = await UsersModel.deleteUser(reqParam.email)
             res.status(200).json(r)
             return  
         } catch (err) {
