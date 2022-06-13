@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const api = 'http://localhost:8066';
-const api = 'https://34.101.203.244';
+const api = 'https://34.101.203.244/api';
 const login = async (email, password) => {
     try {
         const user = await axios.post(api+'/auth/login', { email, password });
