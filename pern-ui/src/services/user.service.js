@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header.service";
 
 // const api = 'http://localhost:8066';
-const api = 'https://34.101.203.244/api'
+const api = 'https://34.101.203.244:8066'
 
 const getUsers = async (pageNo=1, itemsPerPage=20) => {
     return await axios.get(api + "/users", { headers: authHeader() });

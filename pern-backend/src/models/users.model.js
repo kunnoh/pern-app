@@ -6,8 +6,7 @@ class UsersModel {
         try {
             const userRes = await pool.query('INSERT INTO users (email, firstname, lastname) VALUES ($1, $2, $3)', [user.email, user.firstname, user.lastname])
             const inserted = userRes.rows[0]
-            console.log(inserted)
-            return { insertedId: inserted.id }
+            return { message: "user created" }
         } catch (err) {
             console.error(err)
             // if (String(e).startsWith('MongoError: E11000 duplicate key error')) {
