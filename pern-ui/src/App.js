@@ -1,8 +1,8 @@
 // import logo from './logo.svg';
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import Login from './components/auth/login';
 import NotFound from "./components/404/notfound";
 import Students from "./components/student/student";
@@ -12,35 +12,30 @@ import { clearMessage } from "./actions/message.action";
 import { history } from "./misc/history";
 
 function App() {
-  const [loggedIn, setLogged] = useState(false);
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const logOut = () => {
-    dispatch(logout);
-    setLogged(false);
-  };
+
   useEffect(() => {
     history.listen((location) => {
       dispatch(clearMessage()); // clear message when changing location
     });
   }, [dispatch]);
-  useEffect(() => {
-    if (currentUser) {
-      setLogged(true);
-    }
-  }, [currentUser], logOut);
 
+  const logOut = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
+  
   return (
     <div className="container">
-      <header className="flex header">
-        <a href='/'>PERN-APP</a>
-        <div>
-
-        </div>
-        {loggedIn && <span onClick={logOut}>logout</span>}
-      </header>
-
       <BrowserRouter history={history}>
+        <header className="flex header">
+          <a href='/'>PERN-APP</a>
+          <div className='flex link'>
+            {currentUser && <Link to={"/"}>students</Link>}
+            {currentUser && <Link to={"/subjects"}>subjects</Link>}
+          </div>
+          {currentUser && <span onClick={logOut}>logout</span>}
+        </header>
         <Routes>
           <Route exact path="/" element={<Students />}/>
           <Route exact path="/login" element={<Login />}/>

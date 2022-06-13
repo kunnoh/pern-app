@@ -35,9 +35,6 @@ export default function Dashboard() {
   const form = useRef();
   const classes = useStyles();
   const { user: currentUser } = useSelector((state) => state.auth);
-  if(!currentUser) {
-    return <Navigate to="/login"/>
-  }
 
   const [open, setOpen] = useState(false);
   const [confirm, setconfirm] = useState(false);
@@ -117,6 +114,11 @@ export default function Dashboard() {
       console.log(err);
     }
     setOpen(false);
+  }
+
+  // check if the user is authenticated
+  if(!currentUser) {
+    return <Navigate to="/login"/>
   }
 
   return(

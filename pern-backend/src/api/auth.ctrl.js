@@ -26,6 +26,7 @@ class Authctrl {
                 res.setHeader('authorization', 'Bearer '+accessToken)
                 res.setHeader('RefreshToken', refreshToken)
                 loggedUser['refreshToken'] = refreshToken
+                loggedUser['accessToken'] = accessToken
                 
                 res.status(200).json(loggedUser)
                 return

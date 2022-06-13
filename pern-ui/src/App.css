@@ -28,4 +28,8 @@
 }
 
 
-
+.link{
+  justify-content: space-evenly;
+  flex: 1;
+  font-size: 20px;
+}

@@ -27,9 +27,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login(props) {
     const { user: currentUser } = useSelector((state) => state.auth);
-    if(currentUser) {
-      return <Navigate to="/"/>
-    }
     const form = useRef();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -58,6 +55,9 @@ export default function Login(props) {
         return <Navigate to="/" />;
     }
   
+    if(currentUser) {
+        return <Navigate to="/"/>
+    }
     return(
         <div className='flex column flex-center'>
             <form 

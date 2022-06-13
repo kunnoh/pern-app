@@ -10,13 +10,14 @@ export const login = (username, password) => (dispatch) => {
     return AuthService.login(username, password).then(
         (resp) => {
             dispatch({
-            type: LOGIN_SUCCESS,
-            payload: { user: resp },
+                type: LOGIN_SUCCESS,
+                payload: { user: resp },
             });
             return Promise.resolve();
         },
         (error) => {
-            const message = error.error.toString();
+            const message = (error.response && error.response.data &&
+              error.response.data.message) || error.message || error.toString();
             dispatch({ type: LOGIN_FAIL });
             dispatch({ type: SET_MESSAGE, payload: message });
             return Promise.reject();
@@ -25,13 +26,10 @@ export const login = (username, password) => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-     return AuthService.logout().then((r)=>{
-        localStorage.removeItem('user');
-        window.location.reload()
-        dispatch({
-          type: LOGOUT,
-        });
-        return Promise.resolve();
+    AuthService.logout();
+    dispatch({
+        type: LOGOUT,
     });
+    return Promise.resolve();
 
 };
