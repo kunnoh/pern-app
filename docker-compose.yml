@@ -1,0 +1,44 @@
+version: '3'
+services:
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - 3050:80
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=''
+
+  api:
+    depends_on:
+      - postgres
+    build: 
+      dockerfile: Dockerfile.dev
+      context: './pern-backend'
+    volumes:
+      - /app/node_modules
+      - ./pern-backend:/app
+    environment:
+      - PGUSER=postgres
+      - PGDATABASE=schmanage
+      - PGPASSWORD=''
+      - PGPORT=5432
+      - PGHOST=postgres
+
+  client:
+    stdin_open: true
+    depends_on:
+      - api
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./ui
+    volumes:
+      - /app/node_modules
+      - ./ui:/app
