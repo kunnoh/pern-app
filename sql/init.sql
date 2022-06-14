@@ -5,16 +5,16 @@ GRANT ALL PRIVILEGES ON DATABASE schmanage TO postgres;
 
 CREATE TABLE IF NOT EXISTS accounts (
 	user_id serial PRIMARY KEY,
-	firstname VARCHAR ( 50 ) NOT NULL,
-	lastname VARCHAR ( 50 ) NOT NULL,
-	password VARCHAR ( 50 ) NOT NULL,
+	firstname VARCHAR ( 100 ) NOT NULL,
+	lastname VARCHAR ( 100 ) NOT NULL,
+	pass_word VARCHAR ( 100 ) NOT NULL,
 	email VARCHAR ( 255 ) UNIQUE NOT NULL,
 	created_on TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     last_login TIMESTAMP 
 );
 
-INSERT INTO accounts(user_id, firstname, lastname, password, email, created_on)
+INSERT INTO accounts(user_id, firstname, lastname, pass_word, email, created_on)
 VALUES (DEFAULT, 'admin', 'admin', 'admin123', 'admin@a.m', '2022-06-11 03:14:07 UTC');
 
 CREATE TABLE IF NOT EXISTS roles(

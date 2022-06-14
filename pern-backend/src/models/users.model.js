@@ -5,7 +5,7 @@ class UsersModel {
         user['joined'] = Date.now()
         try {
             const timeNow = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            const userRes = await pool.query('INSERT INTO accounts (user_id, firstname, lastname, password, email, created_on) VALUES (DEFAULT, $1, $2, $3, $4, $5)', [user.firstname, user.lastname, 'fgif67iig', user.email, timeNow])
+            const userRes = await pool.query('INSERT INTO accounts (user_id, firstname, lastname, pass_word, email, created_on) VALUES (DEFAULT, $1, $2, $3, $4, $5)', [user.firstname, user.lastname, 'fgif67iig', user.email, timeNow])
             const inserted = userRes.rows[0]
             return { message: "user created" }
         } catch (err) {
@@ -24,7 +24,7 @@ class UsersModel {
             if(!userData){
                 throw { error: 'password or email incorrect' }
             } else {
-                if(userData.password === password){
+                if(userData.pass_word === password){
                     return userData
                 }            
                 throw { error: 'password or email incorrect' }
