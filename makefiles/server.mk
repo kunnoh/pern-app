@@ -16,6 +16,9 @@ server.daemon: ## Start daemon docker-compose.yml
 server.stop: ## Stop running images
 	sudo docker-compose stop
 	sudo docker-compose down
+	sudo docker rmi pern-app_client
+	sudo docker rmi pern-app_api
+	sudo docker rmi pern-app_nginx
 
 server.rebuild: ## Delete images and rebuild
 	sudo docker-compose stop
