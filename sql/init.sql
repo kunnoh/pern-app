@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 	password VARCHAR ( 50 ) NOT NULL,
 	email VARCHAR ( 255 ) UNIQUE NOT NULL,
 	created_on TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP,
     last_login TIMESTAMP 
 );
 

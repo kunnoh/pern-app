@@ -70,8 +70,9 @@ class UsersModel {
 
     static async updateUser(userToUpdate){
         try {
-            const user = await pool.query('UPDATE accounts SET firstname = $1, lastname = $2 WHERE email = $3',
-            [userToUpdate.firstname, userToUpdate.lastname, userToUpdate.email])
+            const timeNow = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            await pool.query('UPDATE accounts SET firstname = $1, lastname = $2, updated_at = $3 WHERE email = $4',
+            [userToUpdate.firstname, userToUpdate.lastname, timeNow, userToUpdate.email])
             return { message: 'success' }    
         } catch (err) {
             console.error('Error updating user:: ',err)
