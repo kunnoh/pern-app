@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Register api routes
-app.use('/', express.static("public"))
+// app.use('/', express.static("public"))
 app.use('/auth', authRoute)
 app.use('/users', AuthMiddleware.isAuthenticated, usersRoute)
 
