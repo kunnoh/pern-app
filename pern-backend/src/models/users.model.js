@@ -4,7 +4,7 @@ class UsersModel {
     static async createUser (user){
         user['joined'] = Date.now()
         try {
-            const userRes = await pool.query('INSERT INTO users (email, firstname, lastname) VALUES ($1, $2, $3)', [user.email, user.firstname, user.lastname])
+            const userRes = await pool.query('INSERT INTO accounts (email, firstname, lastname) VALUES ($1, $2, $3)', [user.email, user.firstname, user.lastname])
             const inserted = userRes.rows[0]
             return { message: "user created" }
         } catch (err) {
@@ -18,7 +18,7 @@ class UsersModel {
 
     static async loginUser(email, password) {
         try {
-            const user = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+            const user = await pool.query('SELECT * FROM accounts WHERE email = $1', [email])
             const userData = user.rows[0]
             if(!userData){
                 throw { error: 'password or email incorrect' }
@@ -36,7 +36,7 @@ class UsersModel {
 
     static async getUser(id){
         try {
-            const user =  await pool.query('SELECT * FROM users WHERE id = $1', [id])
+            const user =  await pool.query('SELECT * FROM accounts WHERE user_id = $1', [id])
             const userData = user.rows
             return { userData }
         } catch (err) {
@@ -56,7 +56,7 @@ class UsersModel {
 
         console.log("QUERY PARAMS:: ", query_params)
         try {
-            const users = await pool.query('SELECT * FROM users ORDER BY id ASC')
+            const users = await pool.query('SELECT * FROM accounts ORDER BY user_id ASC')
             const usersList = users.rows
             const totalUsers = users.rowCount
             return { usersList, totalUsers }
@@ -69,7 +69,7 @@ class UsersModel {
 
     static async updateUser(userToUpdate){
         try {
-            const user = await pool.query('UPDATE users SET firstname = $1, lastname = $2 WHERE email = $3',
+            const user = await pool.query('UPDATE accounts SET firstname = $1, lastname = $2 WHERE email = $3',
             [userToUpdate.firstname, userToUpdate.lastname, userToUpdate.email])
             return { message: 'success' }    
         } catch (err) {
@@ -80,7 +80,7 @@ class UsersModel {
 
     static async deleteUser(email){
         try {
-            const response = await pool.query('DELETE FROM users WHERE email = $1', [email])
+            const response = await pool.query('DELETE FROM accounts WHERE email = $1', [email])
             console.log(response)
             return { message: 'success' }
         } catch (err) {
