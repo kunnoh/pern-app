@@ -1,4 +1,6 @@
 import {
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
@@ -19,6 +21,25 @@ export const login = (username, password) => (dispatch) => {
             const message = (error.response && error.response.data &&
               error.response.data.message) || error.message || error.toString();
             dispatch({ type: LOGIN_FAIL });
+            dispatch({ type: SET_MESSAGE, payload: message });
+            return Promise.reject();
+        }
+    );
+};
+
+export const register = (firstname, lastname, email, password) => (dispatch) => {
+    return AuthService.register(firstname, lastname, email, password).then(
+        (resp) => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: { user: resp },
+            });
+            return Promise.resolve();
+        },
+        (error) => {
+            const message = (error.response && error.response.data &&
+              error.response.data.message) || error.message || error.toString();
+            dispatch({ type: REGISTER_FAIL });
             dispatch({ type: SET_MESSAGE, payload: message });
             return Promise.reject();
         }

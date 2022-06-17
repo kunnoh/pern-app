@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header.service";
 
-const api = '/api';
+const api = 'api';
 
 const getUsers = async (pageNo=1, itemsPerPage=20) => {
     return await axios.get(api + "/users", { headers: authHeader() });

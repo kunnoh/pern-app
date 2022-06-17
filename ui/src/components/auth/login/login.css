@@ -1,0 +1,26 @@
+.login-form {
+    padding: 40px 0;
+}
+
+.alert-danger {
+    color: red;
+    font-weight: 300;
+}
+.spinner-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(17, 84, 143, 0.27);
+}
+.actions{
+    font-weight: 300;
+    padding-top: 20px;
+}
+.actions a{
+    font-weight: 300;
+    text-decoration: underline;
+    color: blueviolet;
+    cursor: pointer;
+}

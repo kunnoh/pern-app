@@ -1,10 +1,9 @@
 import axios from "axios";
 
-const api = '/api';
+const api = 'api';
 const login = async (email, password) => {
     try {
         const user = await axios.post(api+'/auth/login', { email, password });
-        console.log(user)
         if(user){
             localStorage.setItem('user', JSON.stringify(user.data));
         };
@@ -13,6 +12,15 @@ const login = async (email, password) => {
         if(err.response.status === 401){
             throw { message: "incorrect email or password" };
         }
+        throw err;
+    }
+}
+
+const register = async (firstname, lastname, email, password) => {
+    try {
+        const user = await axios.post(api+'/auth/register', { firstname, lastname, email, password });
+        return user.data;
+    } catch (err) {
         throw err;
     }
 }
@@ -28,6 +36,7 @@ const logout = async (accessToken) => {
 
 export default {
     login,
-    logout
+    logout,
+    register
 }
 

@@ -3,7 +3,9 @@ import './App.css';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import Login from './components/auth/login';
+import Login from './components/auth/login/login';
+import Register from './components/auth/register/register';
+import ForgotPassword from './components/auth/forgot-password/forgot-password';
 import NotFound from "./components/404/notfound";
 import Students from "./components/student/student";
 import Subjects from "./components/subjects/subjects";
@@ -39,6 +41,8 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Students />}/>
           <Route exact path="/login" element={<Login />}/>
+          <Route exact path="/register" element={<Register />}/>
+          <Route exact path="/forgot-password" element={<ForgotPassword />}/>
           <Route exact path="/subjects" element={<Subjects />}/>
           <Route path="*" element={<NotFound/>}/>      
         </Routes>

@@ -1,0 +1,13 @@
+.actions{
+    padding-top: 20px;
+    font-weight: 300;
+}
+.default-link{
+    font-weight: 300;
+    text-decoration: underline;
+    color: blueviolet;
+    cursor: pointer;
+}
+.alert-success{
+    color: green;
+}

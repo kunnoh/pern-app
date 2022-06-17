@@ -1,4 +1,4 @@
-const UsersModel = require("../models/users.model");
+const UsersModel = require("../DAO/users.DAO");
 
 class Usersctrl {
     static async createUser(req,res){
@@ -15,7 +15,6 @@ class Usersctrl {
             res.status(201).json(saveResp)
             return
         } catch (err) {
-            console.error(err)
             res.status(500).json(err)
             return
         }

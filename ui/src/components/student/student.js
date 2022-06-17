@@ -209,7 +209,7 @@ export default function Dashboard() {
       </Dialog>
 
 
-      {/* dialog to capture user data */}
+      {/* confirm delete modal */}
       <Dialog open={confirm} onClose={handleClose}>
         <DialogTitle>delete this user</DialogTitle>
         <DialogActions>
