@@ -1,2 +1,0 @@
-ALTER USER postgres WITH PASSWORD 'root';CREATE DATABASE schmanage;
-GRANT ALL PRIVILEGES ON DATABASE schmanage TO postgres;
