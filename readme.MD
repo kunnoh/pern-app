@@ -3,20 +3,31 @@
 make sure you have make, docker and docker-compose installed
 
 starting the service
-```bash make server.start```
+**Bold**
+```make server.start```
+__Bold__
 
 start in detach mode
-```bash make server.daemon```
+**Bold**
+```make server.daemon```
+__Bold__
 
 start in development mode
-```bash make server.startdev```
+**Bold**
+```make server.startdev```
+__Bold__
 
 rebuild images
-```bash make server.rebuild```
+**Bold**
+```make server.rebuild```
+__Bold__
 
 connect to database image
-```bash make database.connect```
+**Bold**
+```make database.connect```
+__Bold__
 
 stop images running
-```bash make server.stop```
-
+**Bold**
+```make server.stop```
+__Bold__
